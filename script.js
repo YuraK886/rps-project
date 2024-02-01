@@ -1,143 +1,83 @@
-// An array for possible variant
-const variant = ["rock", "paper", "scissors"];
-const times = 5;
+const VARIANTS = ["rock", "paper", "scissors"];
+const ROUNDS = 3;
 
-// Function that control game flow
-function playGame(times)
+console.log(playGame(ROUNDS));
+
+
+function promptVerification ()
 {
-    // Variables for counting points
-    let userPoints = 0;
-    let computerPoints = 0;
-    
-    // Loop for controlling number of rounds
-    for(let i = 1; i <= times; i++)
+    let playerChoice = prompt("Rock, paper or scissors?");
+    playerChoice = playerChoice.toLowerCase();
+
+    for(let i = 0; i < VARIANTS.length; i++)
     {
-      let result = playRound();
-       
-      if(result === "User win")
-      {
-        userPoints += 1;
-      }
-      else if(result === "Computer win")
-      {
-        computerPoints += 1;
-      }
+        if(playerChoice === VARIANTS[i])
+        {
+            return playerChoice;
+        }
     }
 
-    if(userPoints > computerPoints)
-    {
-        console.log("User won the game!");
-    }
-    else if(computerPoints > userPoints)
-    {
-        console.log("Computer won the game!");
-    }
-    else
-    {
-        console.log("The game ends with tie!");
-    }
-        
+    console.error("Ivalid asnwer.Check your input.");
+    return false;
 }
 
-//
-
-// Play the game
-console.log(playGame(times));
-
-
-// Function for handling user`s prompt
-function getUsersChoice()
+function generateComputerChoice()
 {
-    // Get user`s prompt
-    let userChoice = prompt("Choose rock, paper or scissors");
+    let randomNumber = Math.floor(Math.random() * 3);
+    let computerChoice = VARIANTS[randomNumber];
+    return computerChoice;
+} 
 
-    // Verify correctness of the user`s prompt
-    if(checkPrompt(userChoice) === true)
-    {
-        return userChoice.toLowerCase();
-    }
-    else 
-    {
-        return false;
-    }
-    // Create a function for verifying user`s prompt
-    function checkPrompt(userChoice)
-    {
-        // Set user`s prompt to lower
-        userChoice = userChoice.toLowerCase();
-        
-        // Compare prompt to possible options
-        let isCorrect = false;
-        for(let i = 0; i < variant.length; i++)
-        {
-            if(userChoice === variant[i])
-            {
-                isCorrect = true;
-            }
-        }
-        if(isCorrect === false)
-        {
-            console.log("Your prompt is invalid. Check it and try again.");
-            return false;
-        }
-        else 
-        {
-            return true;
-        }
-        
-    }
-
-}
-// Function for a random pick of rock, paper or scissors
-function getComputerChoice()
+function playRound()
 {
-    // Choose random variant from possible
-    let answer = Math.floor(Math.random() * variant.length);
-    
-    // Return answer
-    return variant[answer];
-}
+    computerChoice = generateComputerChoice();
+    playerChoice = promptVerification();
 
-// Compare answers from user and computer
-function getResult(userChoice, computerChoice)
-{
-    if(computerChoice === userChoice)
+    if(computerChoice === "rock" && playerChoice === "paper" || computerChoice === "paper" && playerChoice === "scissors" || computerChoice === "scissors" && playerChoice === "rock")
+    {
+        return "Player won!";
+    }
+    else if(computerChoice === playerChoice)
     {
         return "Tie!";
     }
-    else if(computerChoice === "rock" && userChoice === "paper" || computerChoice === "scissors" && userChoice === "rock" || computerChoice === "paper" && userChoice === "")
+    else
     {
-        return "User win!"
-    }
-    else 
-    {
-        return "Computer win!"
+        return "Computer won!";
     }
 }
 
-// Function for playing rounds
-function playRound()
+function playGame(rounds)
 {
-        // Ask players for their choice
-        let userChoice =  getUsersChoice();
-        let computerChoice = getComputerChoice();
-        
-        // Compare their answer
-        console.log(getResult(userChoice, computerChoice));
+    let playerScore = 0;
+    let computerScore = 0;
+    
+    for(let i = 1; i <= rounds; i++)
+    {
+        let winner = playRound();
+        console.log(winner);
 
-        // Assign the point to the victor
-        let result = getResult(userChoice, computerChoice);
-        if( result === "User win!")
+        if(winner === "Player won!")
         {
-            return "User win";
+            playerScore += 1;
         }
-        else if (result === "Computer win!")
+        else if(winner === "Computer won!")
         {
-            return "Computer win";
-        }  
-        else
-        {
-            return "Tie";
+            computerScore += 1;
         }
-
+    }
+    
+    if(playerScore > computerScore)
+    {
+        return "Player won the game";
+    }
+    else if(computerScore > playerScore)
+    {
+        return "Computer won the game";
+    }
+    else
+    {
+        return "Tie";
+    }
 }
+
