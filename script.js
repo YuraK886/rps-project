@@ -1,26 +1,29 @@
 const VARIANTS = ["rock", "paper", "scissors"];
-const ROUNDS = 3;
+const ROUNDS = 1;
+playerChoice()
 
-console.log(playGame(ROUNDS));
-
-
-function promptVerification ()
+function playerChoice()
 {
-    let playerChoice = prompt("Rock, paper or scissors?");
-    playerChoice = playerChoice.toLowerCase();
+    let playerChoice = ""; 
+    
+    const rock = document.querySelector('#rock');
+    rock.addEventListener('click', () => {
+        playerChoice = "rock";
+        console.log(playGame(ROUNDS, playerChoice));
+    });
 
-    for(let i = 0; i < VARIANTS.length; i++)
-    {
-        if(playerChoice === VARIANTS[i])
-        {
-            return playerChoice;
-        }
-    }
+    const paper = document.querySelector('#paper');
+    paper.addEventListener('click', () => {
+        playerChoice = "paper"
+        console.log(playGame(ROUNDS, playerChoice));
+    });
 
-    console.error("Ivalid asnwer.Check your input.");
-    return false;
+    const scissors = document.querySelector('#scissors');
+    scissors.addEventListener('click', () => {
+        playerChoice = "scissors"
+        console.log(playGame(ROUNDS, playerChoice));
+    });
 }
-
 function generateComputerChoice()
 {
     let randomNumber = Math.floor(Math.random() * 3);
@@ -28,10 +31,9 @@ function generateComputerChoice()
     return computerChoice;
 } 
 
-function playRound()
+function playRound(playerChoice)
 {
     computerChoice = generateComputerChoice();
-    playerChoice = promptVerification();
 
     if(computerChoice === "rock" && playerChoice === "paper" || computerChoice === "paper" && playerChoice === "scissors" || computerChoice === "scissors" && playerChoice === "rock")
     {
@@ -47,14 +49,14 @@ function playRound()
     }
 }
 
-function playGame(rounds)
+function playGame(rounds, playerChoice)
 {
     let playerScore = 0;
     let computerScore = 0;
     
     for(let i = 1; i <= rounds; i++)
     {
-        let winner = playRound();
+        let winner = playRound(playerChoice);
         console.log(winner);
 
         if(winner === "Player won!")
