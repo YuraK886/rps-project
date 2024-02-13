@@ -14,14 +14,47 @@
             font-weight: bold;
             border-radius: 5%;
         }
+
+        .scoreboard {
+            display: flex;
+            justify-content: space-evenly;
+            padding: 20px;
+            margin:20px;
+            width: 100%;
+            background-color: rgb(95, 123, 218);
+        }
+
+        #player,
+        #computer {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        #winner {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 25px 50px 25px 50px;
+            background-color: rgb(95, 123, 218);
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
     </style>
 </head>
-<body>
+<body style="display: flex;flex-direction: column;align-items: center;">
+    <div class="scoreboard">
+        <div id="player" style="width: 150px;text-align: start;">Player: 0</div>
+        <div id="computer" style="width: 150px;text-align: start;">Computer: 0</div>
+    </div>
     
     <div class="buttons" style="display: flex;justify-content: space-around;align-items: center;gap: 30px; ">
-        <button>Rock</button>
-        <button>Paper</button>
-        <button>Scissors</button>
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
     </div>
+    <div id="winner"></div>
 </body>
 </html>
