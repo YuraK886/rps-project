@@ -1,27 +1,48 @@
 const VARIANTS = ["rock", "paper", "scissors"];
-const ROUNDS = 1;
-playerChoice()
+const ROUNDS = 5;
 
-function playerChoice()
+let roundsPlayed = 0;
+
+let playerScore = 0;
+let computerScore = 0;
+
+getPlayerChoice();
+
+function getPlayerChoice()
 {
     let playerChoice = ""; 
     
     const rock = document.querySelector('#rock');
     rock.addEventListener('click', () => {
         playerChoice = "rock";
-        console.log(playGame(ROUNDS, playerChoice));
+
+        countScore(playerChoice);
+        if(roundsPlayed === ROUNDS)
+        {
+            printWinner();
+        }
     });
 
     const paper = document.querySelector('#paper');
     paper.addEventListener('click', () => {
         playerChoice = "paper"
-        console.log(playGame(ROUNDS, playerChoice));
+
+        countScore(playerChoice);
+        if(roundsPlayed === ROUNDS)
+        {
+            printWinner();
+        }
     });
 
     const scissors = document.querySelector('#scissors');
     scissors.addEventListener('click', () => {
         playerChoice = "scissors"
-        console.log(playGame(ROUNDS, playerChoice));
+
+        countScore(playerChoice);
+        if(roundsPlayed === ROUNDS)
+        {
+            printWinner();
+        }
     });
 }
 function generateComputerChoice()
@@ -34,7 +55,7 @@ function generateComputerChoice()
 function playRound(playerChoice)
 {
     computerChoice = generateComputerChoice();
-
+    
     if(computerChoice === "rock" && playerChoice === "paper" || computerChoice === "paper" && playerChoice === "scissors" || computerChoice === "scissors" && playerChoice === "rock")
     {
         return "Player won!";
@@ -46,40 +67,48 @@ function playRound(playerChoice)
     else
     {
         return "Computer won!";
-    }
+    } 
 }
 
-function playGame(rounds, playerChoice)
+function countScore(playerChoice)
 {
-    let playerScore = 0;
-    let computerScore = 0;
-    
-    for(let i = 1; i <= rounds; i++)
+    const winner = playRound(playerChoice);
+    roundsPlayed += 1;
+    console.log(winner)
+    if(winner === "Player won!")
     {
-        let winner = playRound(playerChoice);
-        console.log(winner);
+        playerScore += 1;
 
-        if(winner === "Player won!")
-        {
-            playerScore += 1;
-        }
-        else if(winner === "Computer won!")
-        {
-            computerScore += 1;
-        }
+        const playerScoreboard = document.querySelector('#player');
+        playerScoreboard.textContent = `Player: ${playerScore}`;
     }
+    else if(winner === "Computer won!")
+    {
+        computerScore += 1;
+
+        const computerScoreboard = document.querySelector('#computer');
+        computerScoreboard.textContent = `Computer: ${computerScore}`;
+    }
+
+}
+
+function printWinner()
+{  
+    const winnerMessage = document.querySelector('#winner');
     
     if(playerScore > computerScore)
     {
-        return "Player won the game";
+        winnerMessage.textContent = `Player win the game!`;
+        winnerMessage.style.display = "block";
     }
     else if(computerScore > playerScore)
     {
-        return "Computer won the game";
+    winnerMessage.textContent = `Computer win the game!`;
+    winnerMessage.style.display = "block";
     }
     else
     {
-        return "Tie";
+        winnerMessage.textContent = `Tie!`;
+        winnerMessage.style.display = "block";
     }
 }
-
